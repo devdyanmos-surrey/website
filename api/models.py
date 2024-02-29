@@ -18,9 +18,9 @@ class Student(models.Model):
     def is_valid(self, password):
         return self.password == password
 
-class Project(models.Model):
+class Projects(models.Model):
     project_ID = models.IntegerField(primary_key=True)
-    project_details = models.CharField(max=100)
+    project_details = models.CharField(max_length=100)
     
 
 class Student_Project(models.Model):
