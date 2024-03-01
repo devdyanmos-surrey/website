@@ -7,13 +7,7 @@ First cd into the ```backend``` folder.
 cd backend
 ```
 
-### Install Required Python Modules
 
-```bash
-pip install -r django djangorestwork
-pip install django-cors-headers
-```
-### Start Web Server
 
 To start the web server you need to run the following sequence of commands.
 
@@ -21,6 +15,14 @@ start the venv
 ```bash
 source venv/bin/activate
 ```
+
+### Install Required Python Modules
+
+```bash
+pip install -r django djangorestwork
+pip install django-cors-headers
+```
+### Start Web Server
 
 run the django web server.
 ```bash
