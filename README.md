@@ -4,7 +4,7 @@
 
 First cd into the ```backend``` folder.
 ```bash
-cd frontend
+cd backend
 ```
 
 ### Install Required Python Modules
