@@ -10,7 +10,8 @@ cd backend
 ### Install Required Python Modules
 
 ```bash
-pip install -r requirements.txt
+pip install -r django djangorestwork
+pip install django-cors-headers
 ```
 ### Start Web Server
 
