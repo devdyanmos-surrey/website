@@ -59,6 +59,12 @@ How to Contribute
 4. Make your changes on a new branch.
 5. Always make ur branch is upto date by running
    ```
+   git branch <new-branch>
+   git checkout <new-branch>
    git pull
+   git add .
+   git commit -m <message>
+   git push
    ```
+   
 7. Perform a merge request.
