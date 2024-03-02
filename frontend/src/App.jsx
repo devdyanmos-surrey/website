@@ -3,8 +3,9 @@ import Login from './components/Login'
 import Convener from './components/Convener'
 import Student from './components/Student'
 import Academics from './components/Academics'
-import ViewStudents from './components/ViewStudents'
+import ViewStudents from './components/ViewStudent'
 import ViewAcademics from './components/ViewAcademics'
+import ViewProject from './components/ViewProject'
 
 function App() {
 
@@ -18,6 +19,7 @@ function App() {
               <Route path='/academics' element={<Academics />} />
               <Route path='/view-students' element={<ViewStudents />} />
               <Route path='/view-academics' element={<ViewAcademics />} />
+              <Route path='/view-project' element={<ViewProject/>} />
             </Routes>
           </section>
     </Router>
