@@ -8,6 +8,7 @@ import Breadcrumbs from "./utils/Breadcrumbs";
 export default function Convener() {
   // student, academics, convener contents
   const [stuData, setStuData] = useState([]);
+  const [acaData, setAcaData] = useState([]);
   // const location = useLocation();
   // const { from } = location.state || { from: { pathname: "/" } };
 
@@ -15,8 +16,10 @@ export default function Convener() {
 
   const getData = async () => {
     try {
-      const response = await AxiosInstance.get(`students/`);
-      setStuData(response.data);
+      const stuResponse = await AxiosInstance.get(`students/`);
+      const academicResponse = await AxiosInstance.get(`academics/`);
+      // console.log(academicResponse.data);
+      setStuData(stuResponse.data);
     } catch (error) {
       console.error("Error fetching student data:", error);
     }
@@ -61,7 +64,16 @@ export default function Convener() {
     if (targetName === "Students") {
       let keys = Object.keys(stuData[0]);
       let values = stuData.map((student) => Object.values(student));
-      setContent(<Table headData={keys} bodyData={values} />);
+      // console.log(values);
+      keys.map( (key, index) => {
+        if (key.toString().includes("responsible_academics_1")) {
+          keys[index] = "1st Marker";
+        } else if (key.includes("responsible_academics_2")) {
+          keys[index] = "2nd Marker";
+        }
+      });
+
+      setContent(<Table data={stuData}   />);
       setCurrentLocation("students");
 
     } else if (targetName === "Academics") {

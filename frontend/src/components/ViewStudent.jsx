@@ -2,8 +2,8 @@
 /* eslint-disable react/prop-types */
 import { useLocation } from "react-router-dom";
 import { Link } from "react-router-dom";
-import Table from "./utils/Table";
 import Breadcrumbs from "./utils/Breadcrumbs";
+import AcademicTable from "./utils/AcademicTable";
 
 export default function ViewStudent() {
   //get data from the backend /students
@@ -123,7 +123,7 @@ export default function ViewStudent() {
         </div>
       </div>
         <div>
-        <Table headData={pjKeys} bodyData={pjValues} />
+        <AcademicTable headData={pjKeys} bodyData={pjValues} />
         </div>
     </div>
     </>
