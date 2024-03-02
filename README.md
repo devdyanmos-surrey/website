@@ -16,6 +16,14 @@ start the venv
 source venv/bin/activate
 ```
 
+if you facing any problems use this 
+(only if you have problem installing python modules)
+```bash
+python3 -m venv .venv
+source .venv/bin/activate
+python3 -m pip install -r requirements.txt
+```
+
 ### Install Required Python Modules
 
 ```bash
