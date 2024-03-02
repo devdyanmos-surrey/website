@@ -20,6 +20,7 @@ export default function Convener() {
       const academicResponse = await AxiosInstance.get(`academics/`);
       // console.log(academicResponse.data);
       setStuData(stuResponse.data);
+      setAcaData(academicResponse.data);
     } catch (error) {
       console.error("Error fetching student data:", error);
     }
@@ -63,7 +64,6 @@ export default function Convener() {
 
     if (targetName === "Students") {
       let keys = Object.keys(stuData[0]);
-      let values = stuData.map((student) => Object.values(student));
       // console.log(values);
       keys.map( (key, index) => {
         if (key.toString().includes("responsible_academics_1")) {

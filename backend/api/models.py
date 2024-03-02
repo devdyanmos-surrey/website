@@ -53,11 +53,6 @@ class Projects(models.Model):
     class Meta:
         # Ensure each project is unique to a student
         unique_together = ('name', 'student')
-    
-    def clean(self):
-        # Check if the project is unique to the student
-        if self.student.projects.filter(name=self.name).exists():
-            raise ValidationErr("Project with this name already exists for the student.")
 
 
 class Mark(models.Model):

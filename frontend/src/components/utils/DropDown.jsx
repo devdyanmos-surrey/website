@@ -15,7 +15,7 @@ const DropDown = forwardRef(function DropDown({data}, ref) {
 
     useImperativeHandle(ref, () => ({
         getSelectElement: () => {
-            return select.current;
+            return select.current.value;
         }
     }));
 

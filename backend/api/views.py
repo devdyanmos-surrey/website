@@ -29,13 +29,13 @@ class StudentViewSet(viewsets.ModelViewSet):
         else:
             return Response(serializers.errors, status=400)
     
-    def retrieve(self, request):
-        student = self.queryset.get(pk=request.data.get('urn'))
+    def retrieve(self, request, pk=None):
+        student = self.queryset.get(pk=pk)
         serializers = self.serializer_class(student)
         return Response(serializers.data)
     
-    def update(self, request):
-        student = self.queryset.get(pk=request.data.get('urn'))
+    def update(self, request, pk=None):
+        student = self.queryset.get(pk=pk)
         serializers = self.serializer_class(student, data=request.data)
         if serializers.is_valid():
             serializers.save()
@@ -43,8 +43,8 @@ class StudentViewSet(viewsets.ModelViewSet):
         else:
             return Response(serializers.errors, status=400)
     
-    def destroy(self, request):
-        student = self.queryset.get(pk=request.data.get('urn'))
+    def destroy(self, request, pk=None):
+        student = self.queryset.get(pk=pk)
         student.delete()
         return Response(status=204)
     

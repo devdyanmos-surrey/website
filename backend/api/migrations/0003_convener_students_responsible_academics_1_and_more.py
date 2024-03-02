@@ -11,15 +11,7 @@ class Migration(migrations.Migration):
     ]
 
     operations = [
-        migrations.CreateModel(
-            name='Convener',
-            fields=[
-                ('name', models.CharField(max_length=100)),
-                ('age', models.IntegerField()),
-                ('convener_id', models.IntegerField(primary_key=True, serialize=False)),
-                ('mail', models.EmailField(max_length=254, unique=True)),
-            ],
-        ),
+      
         migrations.AddField(
             model_name='students',
             name='responsible_academics_1',

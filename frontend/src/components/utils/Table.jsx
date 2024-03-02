@@ -7,7 +7,9 @@ import DropDown from "./DropDown";
 export default function Table({ data }) {
   //get acad data
   const [acaData, setAcaData] = useState([]);
+
   const dropDownRef = useRef(null);
+  const dropDownRef2 = useRef(null);
 
   //fetch data from backend for students
 
@@ -47,12 +49,51 @@ export default function Table({ data }) {
     }
   });
 
+  // eslint-disable-next-line no-unused-vars
+  let stMarkerID = null;
+  // eslint-disable-next-line no-unused-vars
+  let ndMarkerID = null;
+
+  const updateStudent = async (student) => {
+    try {
+      const drop1option = dropDownRef.current.getSelectElement();
+      const drop2option = dropDownRef2.current.getSelectElement()
+
+
+      console.log(student);
+
+      acaData.map((aca) => {
+        if (aca.name === (drop1option)) {
+          stMarkerID = parseInt(aca.acad_id);
+        } else if (aca.name === (drop2option)) {
+          ndMarkerID = parseInt(aca.acad_id);
+        }
+      });
+  //  fields = ('urn','name', 'age', 'mail', 'module', 'responsible_academics_1', 'responsible_academics_2')
+
+      const response = await AxiosInstance.put(`students/${student[2]}/`, {
+        urn: student[2],
+        name: student[0],
+        age: student[1],
+        mail: student[3],
+        module: student[4],
+        "responsible_academics_1" : stMarkerID,
+        "responsible_academics_2": ndMarkerID,
+      });
+      console.log(response.data);
+    } catch (error) {
+      console.error("Error updating student data:", error);
+    }
+  }
+
   //click event handler
   const clickEventHandler = (_stu) => {
    
-      const selectElement = dropDownRef.current.getSelectElement();
-      console.log(selectElement);
 
+    updateStudent(_stu);
+    
+
+    // console.log(drop1option, drop2option);
   };
 
   return (
@@ -70,7 +111,7 @@ export default function Table({ data }) {
               }
               return null;
             })}
-             <th scope="col" className="px-6 py-3">
+            <th scope="col" className="px-6 py-3">
               <span className="sr-only">Update</span>
             </th>
             <th scope="col" className="px-6 py-3">
@@ -86,10 +127,16 @@ export default function Table({ data }) {
             >
               {row.map((body, index) => {
                 if (index !== 2 && index !== 4) {
-                  if (index === 5 || index === 6) {
+                  if (index === 5) {
                     return (
                       <td key={index} className="px-6 py-4 whitespace-nowrap">
-                        <DropDown  data={acaData}  ref={dropDownRef}/>
+                        <DropDown data={acaData} ref={dropDownRef} />
+                      </td>
+                    );
+                  }else if (index === 6) {
+                    return (
+                      <td key={index} className="px-6 py-4 whitespace-nowrap">
+                        <DropDown data={acaData} ref={dropDownRef2} />
                       </td>
                     );
                   }
