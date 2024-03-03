@@ -6,7 +6,51 @@ import { Link } from "react-router-dom";
 import { useLocation } from "react-router-dom";
 
 
+
+let moderationStatus = "pending"
 export default function Academics() {
+
+
+
+    const checkModerationStatus = (curPrjID) => {
+        AxiosInstance.get(`mark/`)
+        .then((response) => {
+          response.data.map((eachMark) => {
+            if ((eachMark.project === curPrjID && eachMark.marked_by === academicId)) {
+                // console.log(eachMark);
+                firstTotalMark = eachMark.total_mark;
+                // console.log("first marker submitted", firstTotalMark);
+                // moderationStatus = "pending"
+            }
+
+            if((eachMark.project === curPrjID && eachMark.marked_by !== academicId)){
+                // console.log(eachMark);
+                sndTotalMark = eachMark.total_mark;
+
+                // console.log(firstTotalMark, sndTotalMark);
+                if( firstTotalMark !== null && sndTotalMark !== null){
+                    if(Math.abs(firstTotalMark - sndTotalMark) >= 10){
+                        moderationStatus = "failed";
+                    }else {
+                        moderationStatus = "approved";
+                    }
+                }
+                
+            //    console.log("second marker submitted", sndTotalMark);
+
+            }
+
+
+
+                    
+          })
+
+        });
+        return moderationStatus;
+    };
+
+
+
 
     const location = useLocation();
     const { pathname } = location;
@@ -30,6 +74,7 @@ export default function Academics() {
   };
   useEffect(() => {
     getData();
+   
   }, []);
 
   let curBreadcrumb = (
@@ -56,6 +101,31 @@ export default function Academics() {
       </div>
     </li>
   );
+
+    let submissionStatus = false;
+    const checkSubmissionStatus = (curPrj) => {
+        AxiosInstance.get(`mark/`)
+        .then((response) => {
+          response.data.map((eachMark) => {
+            if ((eachMark.project === curPrj.project_id && eachMark.academic === academicId)) {
+                submissionStatus = true;
+            }
+          })
+          return submissionStatus;
+        });
+    };
+
+    let firstTotalMark = null;
+    let sndTotalMark = null;
+
+
+    // projectData.map((project) => {
+    //     console.log(checkModerationStatus(project.project_id)   );
+
+    // });
+
+    // checkModerationStatus(2)
+    
 
   return (
     <div>
@@ -106,13 +176,25 @@ export default function Academics() {
                     </div>
                     <div className="flex flex-col pt-3">
                       <dt className="mb-1 text-gray-500 md:text-lg dark:text-gray-400">
-                        Project Status
+                        Moderation Status
                       </dt>
                       <dd className="text-lg font-semibold">
+
+                        
+
                         <span className="inline-flex items-center bg-blue-100 text-blue-800 text-xs font-medium px-2.5 py-0.5 rounded-full dark:bg-blue-900 dark:text-blue-300">
                         <span className="w-2 h-2 me-1 bg-blue-500 rounded-full"></span>
-                          Draft
+                          Moderation {project.project_id} {checkModerationStatus(project.project_id)}
                         </span>
+                        {/* <span className="inline-flex items-center bg-blue-100 text-blue-800 text-xs font-medium px-2.5 py-0.5 rounded-full dark:bg-blue-900 dark:text-blue-300">
+                        <span className="w-2 h-2 me-1 bg-blue-500 rounded-full"></span>
+                          Moderation Approved
+                        </span> */}
+                        {/* 
+                        <span className="inline-flex items-center bg-blue-100 text-blue-800 text-xs font-medium px-2.5 py-0.5 rounded-full dark:bg-blue-900 dark:text-blue-300">
+                        <span className="w-2 h-2 me-1 bg-blue-500 rounded-full"></span>
+                          Moderation Rejected
+                        </span> */}
                       </dd>
                     </div>
                   </dl>
@@ -127,7 +209,7 @@ export default function Academics() {
                     state={{ from: { pathname }, currentProject: project, academic_id: academicId}}
                     className="mt-6 inline-flex items-center px-3 py-2 text-sm font-medium text-center text-white bg-blue-700 rounded-lg hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800"
                   >
-                    Start Marking
+                    {checkSubmissionStatus() === false? "Start Marking" : "Continue Marking"  }
                     <svg
                       className="rtl:rotate-180 w-3.5 h-3.5 ms-2"
                       aria-hidden="true"
