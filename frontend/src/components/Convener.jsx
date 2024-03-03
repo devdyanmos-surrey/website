@@ -2,6 +2,7 @@ import { useState, useEffect } from "react";
 import AxiosInstance from "./Axios";
 import ConvenerNav from "./utils/ConvenerNav";
 import Table from "./utils/Table";
+import AcademicTable from "./utils/AcademicTable";
 import Breadcrumbs from "./utils/Breadcrumbs";
 // import { useLocation } from "react-router-dom";
 
@@ -77,7 +78,11 @@ export default function Convener() {
       setCurrentLocation("students");
 
     } else if (targetName === "Academics") {
-      setContent(<p>This is a list of current Academics</p>);
+
+      let academicKeys = Object.keys(acaData[0]);
+      let academicValues = acaData.map((academic) => Object.values(academic));
+
+      setContent(<AcademicTable headData={academicKeys} bodyData={academicValues} />);
       setCurrentLocation("academics");
     } else if (targetName === "Profile") {
       setContent(<p>This is your profile</p>);

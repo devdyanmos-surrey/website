@@ -1,7 +1,7 @@
 /* eslint-disable react/prop-types */
 import { Link, useLocation } from 'react-router-dom';
 
-export default function Table({ headData, bodyData }) {
+export default function AcademicTable({ headData, bodyData }) {
     //get current path
     const location = useLocation();
     const { pathname } = location
@@ -14,6 +14,9 @@ export default function Table({ headData, bodyData }) {
     }else{
         toPath = '/view-project';
     }
+
+
+    
 
     //click event handler
     const clickEventHandler = (_stu) => {

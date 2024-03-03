@@ -7,6 +7,7 @@ import DropDown from "./DropDown";
 export default function Table({ data }) {
   //get acad data
   const [acaData, setAcaData] = useState([]);
+  const [studentData, setStudentData] = useState(data);
 
   const dropDownRef = useRef(null);
   const dropDownRef2 = useRef(null);
@@ -58,10 +59,6 @@ export default function Table({ data }) {
     try {
       const drop1option = dropDownRef.current.getSelectElement();
       const drop2option = dropDownRef2.current.getSelectElement()
-
-
-      console.log(student);
-
       acaData.map((aca) => {
         if (aca.name === (drop1option)) {
           stMarkerID = parseInt(aca.acad_id);
@@ -71,16 +68,20 @@ export default function Table({ data }) {
       });
   //  fields = ('urn','name', 'age', 'mail', 'module', 'responsible_academics_1', 'responsible_academics_2')
 
-      const response = await AxiosInstance.put(`students/${student[2]}/`, {
-        urn: student[2],
-        name: student[0],
-        age: student[1],
+      console.log(studentData);
+      // eslint-disable-next-line no-unused-vars
+      const response = await AxiosInstance.put(`students/${student[0]}/`, {
+        urn: student[0],
+        name: student[1],
+        age: student[2],
         mail: student[3],
         module: student[4],
         "responsible_academics_1" : stMarkerID,
         "responsible_academics_2": ndMarkerID,
+      }).then((response) => {
+        setStudentData(response.data);
       });
-      console.log(response.data);
+      
     } catch (error) {
       console.error("Error updating student data:", error);
     }
@@ -97,7 +98,7 @@ export default function Table({ data }) {
   };
 
   return (
-    <div className="relative overflow-x-auto shadow-md sm:rounded-lg max-w-screen-md m-auto mt-12">
+    <div className="relative overflow-x-auto shadow-md sm:rounded-lg max-w-screen-lg m-auto mt-12">
       <table className="w-full text-sm text-left rtl:text-right text-gray-500 dark:text-gray-400">
         <thead className="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
           <tr>

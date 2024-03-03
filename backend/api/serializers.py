@@ -10,4 +10,10 @@ class StudentSerializer(serializers.ModelSerializer):
 class AcademicsSerializer(serializers.ModelSerializer):
     class Meta:
         model = Academics
-        fields = '__all__'
+        fields = ('acad_id', 'name', 'age', 'mail')
+        
+        
+class ProjectsSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Projects
+        fields = ('project_id', 'name', 'deadline', 'student', 'marked', 'marked_by')

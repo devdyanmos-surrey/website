@@ -4,20 +4,36 @@ import { useLocation } from "react-router-dom";
 import { Link } from "react-router-dom";
 import Breadcrumbs from "./utils/Breadcrumbs";
 import AcademicTable from "./utils/AcademicTable";
+import { useState, useEffect } from "react";
+import AxiosInstance from "./Axios";
 
 export default function ViewStudent() {
   //get data from the backend /students
   //dummy project
-  let pjKeys = ["name", "description", "status", "date"];
-  let pjValues = [
-    ["Project 1", "Description 1", "Ongoing", "2021-10-10"],
-  ];
-
+  const [prjData, setPrjData] = useState([]);
   const location = useLocation();
   const { from } = location.state || { from: { pathname: "/" } };
 
   let student = location.state.student;
   console.log(student);
+
+
+  const getData = async () => {
+    try {
+      const prjResponse = await AxiosInstance.get(`projects/`);  
+      setPrjData(prjResponse.data);
+    } catch (error) {
+      console.error("Error fetching student data:", error);
+    }
+  };
+  useEffect(() => {
+    getData();
+  }, []);
+
+
+  let pjKeys = Object.keys(prjData[0]);
+  let pjValues = prjData.map((project) => Object.values(project));
+  let tableContent = (<AcademicTable headData={pjKeys} bodyData={pjValues} />);
 
   return (
     <>
@@ -123,7 +139,7 @@ export default function ViewStudent() {
         </div>
       </div>
         <div>
-        <AcademicTable headData={pjKeys} bodyData={pjValues} />
+            {tableContent}
         </div>
     </div>
     </>
