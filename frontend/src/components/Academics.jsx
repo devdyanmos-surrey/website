@@ -16,6 +16,10 @@ export default function Academics() {
         AxiosInstance.get(`mark/`)
         .then((response) => {
           response.data.map((eachMark) => {
+            if( eachMark.project !== curPrjID ){
+                moderationStatus = "pending";
+            }
+
             if ((eachMark.project === curPrjID && eachMark.marked_by === academicId)) {
                 // console.log(eachMark);
                 firstTotalMark = eachMark.total_mark;
@@ -124,7 +128,7 @@ export default function Academics() {
 
     // });
 
-    // checkModerationStatus(2)
+    checkModerationStatus(2)
     
 
   return (
@@ -184,7 +188,7 @@ export default function Academics() {
 
                         <span className="inline-flex items-center bg-blue-100 text-blue-800 text-xs font-medium px-2.5 py-0.5 rounded-full dark:bg-blue-900 dark:text-blue-300">
                         <span className="w-2 h-2 me-1 bg-blue-500 rounded-full"></span>
-                          Moderation {project.project_id} {checkModerationStatus(project.project_id)}
+                          Moderation {project.project_id} {checkModerationStatus(parseInt(2))}
                         </span>
                         {/* <span className="inline-flex items-center bg-blue-100 text-blue-800 text-xs font-medium px-2.5 py-0.5 rounded-full dark:bg-blue-900 dark:text-blue-300">
                         <span className="w-2 h-2 me-1 bg-blue-500 rounded-full"></span>
@@ -209,7 +213,7 @@ export default function Academics() {
                     state={{ from: { pathname }, currentProject: project, academic_id: academicId}}
                     className="mt-6 inline-flex items-center px-3 py-2 text-sm font-medium text-center text-white bg-blue-700 rounded-lg hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800"
                   >
-                    {checkSubmissionStatus() === false? "Start Marking" : "Continue Marking"  }
+                    {checkSubmissionStatus(project) === false? "Start Marking" : "Continue Marking"  }
                     <svg
                       className="rtl:rotate-180 w-3.5 h-3.5 ms-2"
                       aria-hidden="true"
