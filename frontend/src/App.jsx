@@ -6,6 +6,7 @@ import Academics from './components/Academics'
 import ViewStudents from './components/ViewStudent'
 import ViewAcademics from './components/ViewAcademics'
 import ViewProject from './components/ViewProject'
+import MarkProject from './components/MarkProject'
 
 function App() {
 
@@ -20,6 +21,7 @@ function App() {
               <Route path='/view-students' element={<ViewStudents />} />
               <Route path='/view-academics' element={<ViewAcademics />} />
               <Route path='/view-project' element={<ViewProject/>} />
+              <Route path='/mark-project' element={<MarkProject/>} />
             </Routes>
           </section>
     </Router>

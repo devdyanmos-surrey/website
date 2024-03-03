@@ -161,3 +161,40 @@ class ConvenerViewSet(viewsets.ModelViewSet):
         convener = self.queryset.get(pk=pk)
         convener.delete()
         return Response(status=204)
+    
+class MarkViewSet(viewsets.ModelViewSet):
+    permission_classes = [permissions.AllowAny]
+    queryset = Mark.objects.all()
+    serializer_class = MarkSerializer
+    
+    def list(self, request):
+        queryset = self.queryset
+        serializers = self.serializer_class(queryset, many=True)
+        return Response(serializers.data)
+    
+    def create(self, request):
+        serializers = self.serializer_class(data=request.data)
+        if serializers.is_valid():
+            serializers.save()
+            return Response(serializers.data)
+        else:
+            return Response(serializers.errors, status=400)
+    
+    def retrieve(self, request, pk=None):
+        mark = self.queryset.get(pk=pk)
+        serializers = self.serializer_class(mark)
+        return Response(serializers.data)
+    
+    def update(self, request, pk=None):
+        mark = self.queryset.get(pk=pk)
+        serializers = self.serializer_class(mark, data=request.data)
+        if serializers.is_valid():
+            serializers.save()
+            return Response(serializers.data)
+        else:
+            return Response(serializers.errors, status=400)
+    
+    def destroy(self, request, pk=None):
+        mark = self.queryset.get(pk=pk)
+        mark.delete()
+        return Response(status=204)

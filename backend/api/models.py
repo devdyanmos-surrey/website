@@ -54,14 +54,9 @@ class Projects(models.Model):
     class Meta:
         # Ensure each project is unique to a student
         unique_together = ('name', 'student')
-        
-    def save(self, *args, **kwargs):
-        # Check if this is a new object (not updating existing)
-        if not self.pk:
-            # Get the maximum project_id and increment it by 1
-            max_id = Projects.objects.aggregate(models.Max('project_id'))['project_id__max']
-            self.project_id = 1 if max_id is None else max_id + 1
-        super().save(*args, **kwargs)
+    
+    def __str__(self):
+        return self.name
 
 
 class Mark(models.Model):
@@ -72,13 +67,18 @@ class Mark(models.Model):
     )
     
     project = models.ForeignKey(Projects, on_delete=models.CASCADE)
-    marks = models.IntegerField()
+    total_mark = models.IntegerField()
     comments = models.TextField()
     marked_by = models.ForeignKey(Academics, on_delete=models.CASCADE)
     status = models.CharField(max_length=20, choices=STATUS_CHOICES, default='draft')
-    deadline = models.DateField()
+    deadline = models.DateField(auto_now=True)
     modified = models.DateTimeField(auto_now=True)
     
-    class Meta:
-        # Ensure each project has exactly two marks from two academics
-        unique_together = ('project', 'marked_by')
+    # criteria
+    # marks
+    functional_criteria = models.IntegerField(default=0)
+    style_criteria = models.IntegerField(default=0)
+    syntax_criteria = models.IntegerField(default=0)
+    
+    
+    

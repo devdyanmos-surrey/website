@@ -2,10 +2,15 @@ import { useState, useEffect } from "react";
 import AxiosInstance from "./Axios";
 import Breadcrumbs from "./utils/Breadcrumbs";
 import { Carousel } from "flowbite-react";
-
+import { Link } from "react-router-dom";
+import { useLocation } from "react-router-dom";
 
 
 export default function Academics() {
+
+    const location = useLocation();
+    const { pathname } = location;
+
   let academicId = 2;
   const [projectData, setProjectData] = useState([]);
   const [studentData, setStudentData] = useState([]);
@@ -111,8 +116,15 @@ export default function Academics() {
                       </dd>
                     </div>
                   </dl>
-                  <button
-                    href="#"
+                  {/*  <Link
+                  to={toPath}
+                  state={{ from: { pathname }, student: row, acadData: acaData, projectData: projectData, allStudents: studentData}}
+                  className="font-medium text-blue-600 dark:text-blue-500 hover:underline"
+                  // Pass the rowData to clickEventHandler
+                > */}
+                  <Link
+                    to={'/mark-project/'}
+                    state={{ from: { pathname }, currentProject: project, academic_id: academicId}}
                     className="mt-6 inline-flex items-center px-3 py-2 text-sm font-medium text-center text-white bg-blue-700 rounded-lg hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800"
                   >
                     Start Marking
@@ -131,7 +143,7 @@ export default function Academics() {
                         d="M1 5h12m0 0L9 1m4 4L9 9"
                       />
                     </svg>
-                  </button>
+                  </Link>
                 </div>
               );
             })}
