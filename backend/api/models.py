@@ -44,15 +44,24 @@ class Students(models.Model):
     
 class Projects(models.Model):
     name = models.CharField(max_length=100)
-    project_id = models.IntegerField(primary_key=True)
+    project_id = models.AutoField(primary_key=True)
     deadline = models.DateField()
     student = models.ForeignKey(Students, on_delete=models.CASCADE)
     marked = models.BooleanField()
     marked_by = models.ForeignKey(Academics, on_delete=models.CASCADE, related_name='marked_by')
+    desciption = models.TextField(null=True, default=None)
 
     class Meta:
         # Ensure each project is unique to a student
         unique_together = ('name', 'student')
+        
+    def save(self, *args, **kwargs):
+        # Check if this is a new object (not updating existing)
+        if not self.pk:
+            # Get the maximum project_id and increment it by 1
+            max_id = Projects.objects.aggregate(models.Max('project_id'))['project_id__max']
+            self.project_id = 1 if max_id is None else max_id + 1
+        super().save(*args, **kwargs)
 
 
 class Mark(models.Model):

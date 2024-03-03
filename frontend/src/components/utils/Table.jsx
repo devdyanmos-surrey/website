@@ -8,6 +8,7 @@ export default function Table({ data }) {
   //get acad data
   const [acaData, setAcaData] = useState([]);
   const [studentData, setStudentData] = useState(data);
+  const [projectData, setProjectData] = useState([]);
 
   const dropDownRef = useRef(null);
   const dropDownRef2 = useRef(null);
@@ -17,6 +18,8 @@ export default function Table({ data }) {
   const getData = async () => {
     try {
       const academicResponse = await AxiosInstance.get(`academics/`);
+      const projectsResponse = await AxiosInstance.get(`projects/`);
+      setProjectData(projectsResponse.data);
       setAcaData(academicResponse.data);
     } catch (error) {
       console.error("Error fetching student data:", error);
@@ -124,25 +127,25 @@ export default function Table({ data }) {
           {values.map((row, index) => (
             <tr
               key={index}
-              className="bg-white border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600"
+              className="bg-white border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600 "
             >
               {row.map((body, index) => {
                 if (index !== 2 && index !== 4) {
                   if (index === 5) {
                     return (
-                      <td key={index} className="px-6 py-4 whitespace-nowrap">
+                      <td key={index} className="px-6 py-4 whitespace-nowrap text-center">
                         <DropDown data={acaData} ref={dropDownRef} />
                       </td>
                     );
                   }else if (index === 6) {
                     return (
-                      <td key={index} className="px-6 py-4 whitespace-nowrap">
+                      <td key={index} className="px-6 py-4 whitespace-nowrap text-center">
                         <DropDown data={acaData} ref={dropDownRef2} />
                       </td>
                     );
                   }
                   return (
-                    <td key={index} className="px-6 py-4 whitespace-nowrap">
+                    <td key={index} className="px-6 py-4 whitespace-nowrap text-center">
                       {body}
                     </td>
                   );
@@ -160,7 +163,7 @@ export default function Table({ data }) {
               <td className="px-6 py-4 text-right">
                 <Link
                   to={toPath}
-                  state={{ from: { pathname }, student: row }}
+                  state={{ from: { pathname }, student: row, acadData: acaData, projectData: projectData, allStudents: studentData}}
                   className="font-medium text-blue-600 dark:text-blue-500 hover:underline"
                   // Pass the rowData to clickEventHandler
                 >

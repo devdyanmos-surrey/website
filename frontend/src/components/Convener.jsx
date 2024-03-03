@@ -10,10 +10,7 @@ export default function Convener() {
   // student, academics, convener contents
   const [stuData, setStuData] = useState([]);
   const [acaData, setAcaData] = useState([]);
-  // const location = useLocation();
-  // const { from } = location.state || { from: { pathname: "/" } };
 
-  //fetch data from backend for students
 
   const getData = async () => {
     try {
@@ -65,7 +62,6 @@ export default function Convener() {
 
     if (targetName === "Students") {
       let keys = Object.keys(stuData[0]);
-      // console.log(values);
       keys.map( (key, index) => {
         if (key.toString().includes("responsible_academics_1")) {
           keys[index] = "1st Marker";
@@ -82,7 +78,7 @@ export default function Convener() {
       let academicKeys = Object.keys(acaData[0]);
       let academicValues = acaData.map((academic) => Object.values(academic));
 
-      setContent(<AcademicTable headData={academicKeys} bodyData={academicValues} />);
+      setContent(<AcademicTable headData={academicKeys} bodyData={academicValues} addFeature="no" />);
       setCurrentLocation("academics");
     } else if (targetName === "Profile") {
       setContent(<p>This is your profile</p>);

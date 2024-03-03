@@ -16,4 +16,4 @@ class AcademicsSerializer(serializers.ModelSerializer):
 class ProjectsSerializer(serializers.ModelSerializer):
     class Meta:
         model = Projects
-        fields = ('project_id', 'name', 'deadline', 'student', 'marked', 'marked_by')
+        fields = ('project_id', 'name', 'deadline', 'student', 'marked', 'marked_by', 'desciption')
