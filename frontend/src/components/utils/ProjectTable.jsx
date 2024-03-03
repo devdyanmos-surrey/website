@@ -262,7 +262,7 @@ export default function ProjectTable({
   const clickEventHandler = (_stu) => {};
 
   return (
-    <div className="relative overflow-x-auto shadow-md sm:rounded-lg max-w-screen-md m-auto mt-12">
+    <div className="relative overflow-x-auto shadow-md sm:rounded-lg max-w-screen-xl m-auto mt-12">
       <table className="w-full text-sm text-left rtl:text-right text-gray-500 dark:text-gray-400">
         <thead className="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
           <tr>

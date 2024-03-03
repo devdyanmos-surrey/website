@@ -7,6 +7,7 @@ router = DefaultRouter()
 router.register('students', StudentViewSet, basename='students')
 router.register('academics', AcademicsViewSet, basename='academics')
 router.register('projects', ProjectViewSet, basename='projects')
+router.register('convener', ConvenerViewSet, basename='convener')
 urlpatterns = router.urls
 
 # urlpatterns = [

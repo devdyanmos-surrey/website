@@ -117,7 +117,7 @@ export default function ViewStudent() {
         </li>
       </Breadcrumbs>
 
-      <div className="h-screen flex flex-col items-center mt-48">
+      <div className="h-screen flex flex-col items-center mt-32">
         <div className=" w-fit mb-10 max-w-sm bg-white border border-gray-200 rounded-lg shadow dark:bg-gray-800 dark:border-gray-700 flex flex-col items-center py-8 px-12 self-center">
           <img
             className="w-32 h-32 mb-3 rounded-full object-cover shadow-lg"

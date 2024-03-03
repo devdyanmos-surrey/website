@@ -10,15 +10,25 @@ export default function Convener() {
   // student, academics, convener contents
   const [stuData, setStuData] = useState([]);
   const [acaData, setAcaData] = useState([]);
-
+  const [convenerData, setConvenerData] = useState([]);
+  let [content, setContent] = useState(<p>Welcome to the Convener Dashboard</p>);
+  let convenerValues = null;
+  
 
   const getData = async () => {
     try {
       const stuResponse = await AxiosInstance.get(`students/`);
       const academicResponse = await AxiosInstance.get(`academics/`);
+      const convenerResponse = await AxiosInstance.get(`convener/`)
+      .then((response) => {
+        setConvenerData(response.data);
+        
+      });
+
       // console.log(academicResponse.data);
       setStuData(stuResponse.data);
       setAcaData(academicResponse.data);
+      
     } catch (error) {
       console.error("Error fetching student data:", error);
     }
@@ -26,8 +36,21 @@ export default function Convener() {
   useEffect(() => {
     getData();
   }, []);
+  convenerData.map((convener) => {
+    console.log(convener);
+    //get convener values
+   
+    convenerValues = Object.values(convener);
+    console.log(convenerValues);
+    
 
-  let [content, setContent] = useState(<p>This is your profile</p>);
+
+     
+   });
+
+ 
+
+
   let [currentLocation, setCurrentLocation] = useState("profile");
 
   let curBreadcrumb = (
@@ -81,7 +104,34 @@ export default function Convener() {
       setContent(<AcademicTable headData={academicKeys} bodyData={academicValues} addFeature="no" />);
       setCurrentLocation("academics");
     } else if (targetName === "Profile") {
-      setContent(<p>This is your profile</p>);
+      setContent(
+
+        <div className=" w-fit mb-10 max-w-sm bg-white border border-gray-200 rounded-lg shadow dark:bg-gray-800 dark:border-gray-700 flex flex-col items-center py-8 px-12 self-center">
+        <img
+          className="w-32 h-32 mb-3 rounded-full object-cover shadow-lg"
+          src="./student.png"
+          alt="Bonnie image"
+        />
+
+        <div className="flex flex-col p-2">
+          <h5 className=" text-xl font-medium text-sky-400 dark:text-blue-400 self-center mb-2">
+            {convenerValues[1]}
+          </h5>
+          <span className="text-sm text-gray-500 dark:text-gray-400">
+            <strong>URN: </strong>
+            {convenerValues[0]}
+          </span>
+          <span className="text-sm text-gray-500 dark:text-gray-400">
+            <strong>Age:</strong> {convenerValues[2]}
+          </span>
+          <span className="text-sm text-gray-500 dark:text-gray-400">
+            <strong>Email:</strong> {convenerValues[3]}
+          </span>
+        </div>
+        
+      </div>
+
+      );
       setCurrentLocation("profile");
     }
     // console.log(targetName);
@@ -90,7 +140,7 @@ export default function Convener() {
   return (
     <>
       <Breadcrumbs> {curBreadcrumb} </Breadcrumbs>
-      <div>{content}</div>
+      <div className="flex items-center justify-center h-screen">{content}</div>
       <ConvenerNav onClickHandler={clickHandler} currentTab={currentLocation} />
     </>
   );

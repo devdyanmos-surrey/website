@@ -17,3 +17,8 @@ class ProjectsSerializer(serializers.ModelSerializer):
     class Meta:
         model = Projects
         fields = ('project_id', 'name', 'deadline', 'student', 'marked', 'marked_by', 'desciption')
+        
+class ConvenerSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Convener
+        fields = ('convener_id', 'name', 'age', 'mail')

@@ -1,7 +1,7 @@
 // eslint-disable-next-line react/prop-types
 export default function Breadcrumbs({ children}) {
   return (
-    <nav className="flex" aria-label="Breadcrumb">
+    <nav className="flex p-6" aria-label="Breadcrumb">
       <ol className="inline-flex items-center space-x-1 md:space-x-2 rtl:space-x-reverse">
         <li className="inline-flex items-center">
           <a
