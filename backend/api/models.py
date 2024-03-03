@@ -54,6 +54,9 @@ class Projects(models.Model):
         # Ensure each project is unique to a student
         unique_together = ('name', 'student')
 
+    def __str__(self):
+        return self.name
+    
 
 class Mark(models.Model):
     STATUS_CHOICES = (
@@ -63,13 +66,21 @@ class Mark(models.Model):
     )
     
     project = models.ForeignKey(Projects, on_delete=models.CASCADE)
-    marks = models.IntegerField()
+    total_marks = models.IntegerField()
     comments = models.TextField()
     marked_by = models.ForeignKey(Academics, on_delete=models.CASCADE)
     status = models.CharField(max_length=20, choices=STATUS_CHOICES, default='draft')
     deadline = models.DateField()
     modified = models.DateTimeField(auto_now=True)
+
+    #Marking Criteria for each project
+    functional_criteria = models.IntegerField()
+    style_criteria = models.IntegerField()
+    syntax_criteria = models.IntegerField()
     
     class Meta:
         # Ensure each project has exactly two marks from two academics
         unique_together = ('project', 'marked_by')
+
+    def __str__(self):
+        return self.project.name + ': Marked by ' + self.marked_by.name 
