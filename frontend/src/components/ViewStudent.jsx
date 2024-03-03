@@ -3,7 +3,7 @@
 import { useLocation } from "react-router-dom";
 import { Link } from "react-router-dom";
 import Breadcrumbs from "./utils/Breadcrumbs";
-import AcademicTable from "./utils/AcademicTable";
+import ProjectTable from "./utils/ProjectTable";
 import { useState, useEffect } from "react";
 import AxiosInstance from "./Axios";
 
@@ -38,7 +38,7 @@ export default function ViewStudent() {
   if (projectData.length !== 0) {
     pjKeys = Object.keys(projectData[0]);
     pjValues = projectData.map((project) => Object.values(project));
-    tableContent = <AcademicTable headData={pjKeys} bodyData={pjValues} addFeature="yes" acaData={academic} studentsData = {allStudents} />;
+    tableContent = <ProjectTable headData={pjKeys} bodyData={pjValues} addFeature="yes" acaData={academic} studentsData = {allStudents} studentData = {student} />;
   }
 
 

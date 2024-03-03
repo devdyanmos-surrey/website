@@ -47,7 +47,7 @@ class Projects(models.Model):
     project_id = models.AutoField(primary_key=True)
     deadline = models.DateField()
     student = models.ForeignKey(Students, on_delete=models.CASCADE)
-    marked = models.BooleanField()
+    marked = models.BooleanField(default=False)
     marked_by = models.ForeignKey(Academics, on_delete=models.CASCADE, related_name='marked_by')
     desciption = models.TextField(null=True, default=None)
 
